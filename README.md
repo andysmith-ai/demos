@@ -1,3 +1,9 @@
 # demos
 
-Video demos of software tools. One directory per tool.
+Hands-on deployments of software tools: a Nix dev shell and instructions per tool.
+See [PROCESS.md](PROCESS.md) for the conventions.
+
+## Tools
+
+| Tool | Setup |
+|:-----|:------|
