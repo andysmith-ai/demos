@@ -52,6 +52,11 @@ The shell provides the tool, everything the scenario needs, and the `demo` drive
 has no Nix package, the shell builds it from a pinned upstream revision into
 `~/.cache/demos/<tool>`.
 
+When the presenter works with their own files (configs, definitions, state), the tool directory
+has a `template/` exposed as `templates.<tool>`. The presenter creates a working directory from it
+with `nix flake init -t github:andysmith-ai/demos#<tool>` and enters the shell there with
+`nix develop`. The working directory is the presenter's, not part of this repo.
+
 Setup does not have to be a single command. Deployment steps that are part of understanding the
 tool stay separate commands, documented in `<tool>/README.md`, instead of being hidden in the
 shell. The presenter's first run is the test; failures go back to the agent with the output.
@@ -89,6 +94,7 @@ PR branch; the PR is merged once the recording works.
 <tool>/
   README.md     what the tool is, the scenario, the setup command, findings
   shell.nix     dev shell for the demo, imported by the root flake
+  template/     optional working-directory template, exposed as templates.<tool>
   SCRIPT.md     video script
   steps.txt     driver steps
   ...           demo assets
