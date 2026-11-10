@@ -1,33 +1,44 @@
 # Demo workflow
 
-How a tool demo goes from "let's look at X" to a recorded video. A human presenter and a coding
-agent work through it together; the agent does the research and writes the files, the presenter
-makes the choices, explores the tool and records.
+How we study a tool and turn what we learned into a video. The main result is the presenter's
+own understanding of how the tool works and what it is good for; the video shows that
+understanding. A coding agent researches, explains and writes the files; the presenter decides,
+runs the tool and records.
 
 ## Rules
 
-- One directory per tool, named after the tool (`exoharness/`, …).
+- One directory per tool, named after the tool.
 - Every demo starts with a GitHub issue and lands through a pull request that closes it.
 - Everything in the repo, every issue, PR and commit message is in English.
 - Branch name: `<tool>-demo`. No slashes, so the branch works in a flake reference.
+- Tools run on the presenter's remote Linux machine; the presenter's workstation is only a
+  terminal and a browser. The agent does not run tools on the workstation.
 
 ## Stages
 
 ### 1. Issue
 
-Open `Demo: <tool>` with a link to the tool and what it claims to do. The issue collects the
-decisions made along the way: the chosen tasks, credentials the demo needs, open problems.
+Open `Demo: <tool>` with a link to the tool. The issue collects the decisions made along the
+way: the scenario, credentials and hardware the tool needs, open problems.
 
-### 2. Research and task selection
+### 2. Research
 
-The agent studies the tool: docs, source, examples, status and limitations. It proposes several
-tasks the tool can solve on camera, each with what it shows and what it needs (accounts, keys,
-hardware). The presenter picks one or more, or brings their own. The choice goes into the issue.
+The agent studies the tool from its docs and source: the problem it solves, its concepts, how it
+works inside, alternatives, status and limitations. It explains this to the presenter topic by
+topic and answers questions.
 
-Good demo tasks show something the tool does that alternatives do not, finish in minutes, and
-produce a visible result in the terminal.
+### 3. Scenario
 
-### 3. One-command setup
+Together we agree on the scenario, in three parts:
+
+- **Deploy**: what we stand up.
+- **See**: what we want to observe working.
+- **Learn**: the questions we want answered by the end.
+
+Tasks and experiments are chosen only as ways to answer the Learn questions. The scenario goes
+into the issue and into `<tool>/README.md`.
+
+### 4. One-command setup
 
 The agent adds `<tool>/shell.nix` and wires it into the root `flake.nix` as `devShells.<tool>`.
 The presenter gets one command:
@@ -37,18 +48,25 @@ nix develop github:andysmith-ai/demos/<tool>-demo#<tool>   # before merge
 nix develop github:andysmith-ai/demos#<tool>               # after merge
 ```
 
-The shell provides the tool, everything the demo needs, and the `demo` driver. When the tool has
-no Nix package, the shell builds it from a pinned upstream revision into `~/.cache/demos/<tool>`.
-The agent verifies the command on a clean cache before handing it over.
+The shell provides the tool, everything the scenario needs, and the `demo` driver. When the tool
+has no Nix package, the shell builds it from a pinned upstream revision into
+`~/.cache/demos/<tool>`. The presenter's first run is the test; failures go back to the agent
+with the output.
 
-### 4. Exploration
+### 5. Exploration
 
-The presenter runs the command and plays with the tool. Findings — what worked, what broke, what
-looked good — go back to the agent and into the issue. The task list may change here.
+The presenter deploys what the scenario says and works through it. The agent guides: what to try
+next, what happened under the hood, why something broke. Anything the agent states without a
+presenter run is marked as unverified.
 
-### 5. Script and steps
+### 6. Findings
 
-The agent writes:
+The answers to the Learn questions, with what worked, what did not and where the tool fits, go
+into `<tool>/README.md`.
+
+### 7. Script and steps
+
+From what the presenter found worth showing, the agent writes:
 
 - `<tool>/SCRIPT.md`: the video script. Scenes with what is on screen, what to say, and the
   expected output, plus the one-time preparation before recording.
@@ -57,7 +75,7 @@ The agent writes:
 
 The presenter rehearses with the driver and reports problems until the run is clean.
 
-### 6. Pull request and recording
+### 8. Pull request and recording
 
 The PR adds the tool directory and closes the issue. The presenter records the video from the
 PR branch; the PR is merged once the recording works.
@@ -66,7 +84,7 @@ PR branch; the PR is merged once the recording works.
 
 ```
 <tool>/
-  README.md     what the tool is, the setup command, notes from exploration
+  README.md     what the tool is, the scenario, the setup command, findings
   shell.nix     dev shell for the demo, imported by the root flake
   SCRIPT.md     video script
   steps.txt     driver steps
