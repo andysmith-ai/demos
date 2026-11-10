@@ -38,10 +38,10 @@ Together we agree on the scenario, in three parts:
 Tasks and experiments are chosen only as ways to answer the Learn questions. The scenario goes
 into the issue and into `<tool>/README.md`.
 
-### 4. One-command setup
+### 4. Setup
 
 The agent adds `<tool>/shell.nix` and wires it into the root `flake.nix` as `devShells.<tool>`.
-The presenter gets one command:
+Entering the shell is the first command:
 
 ```sh
 nix develop github:andysmith-ai/demos/<tool>-demo#<tool>   # before merge
@@ -50,8 +50,11 @@ nix develop github:andysmith-ai/demos#<tool>               # after merge
 
 The shell provides the tool, everything the scenario needs, and the `demo` driver. When the tool
 has no Nix package, the shell builds it from a pinned upstream revision into
-`~/.cache/demos/<tool>`. The presenter's first run is the test; failures go back to the agent
-with the output.
+`~/.cache/demos/<tool>`.
+
+Setup does not have to be a single command. Deployment steps that are part of understanding the
+tool stay separate commands, documented in `<tool>/README.md`, instead of being hidden in the
+shell. The presenter's first run is the test; failures go back to the agent with the output.
 
 ### 5. Exploration
 
