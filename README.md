@@ -1,11 +1,9 @@
 # demos
 
-Studies of software tools and videos about them. One directory per tool; each has a Nix dev
-shell, the scenario and findings, a video script and a step file for the `demo` terminal driver.
+Hands-on deployments of software tools: a Nix dev shell and instructions per tool.
+See [PROCESS.md](PROCESS.md) for the conventions.
 
-See [PROCESS.md](PROCESS.md) for how a demo is made.
-
-## Demos
+## Tools
 
 | Tool | Setup |
 |:-----|:------|

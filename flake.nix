@@ -1,10 +1,10 @@
 {
-  description = "Video demos of software tools";
+  description = "Hands-on deployments of software tools";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   outputs =
-    { self, nixpkgs }:
+    { nixpkgs, ... }:
     let
       systems = [
         "aarch64-darwin"
@@ -15,17 +15,6 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
-      packages = forAllSystems (pkgs: {
-        demo = pkgs.writeShellApplication {
-          name = "demo";
-          runtimeInputs = [
-            pkgs.tmux
-            pkgs.coreutils
-          ];
-          text = builtins.readFile ./tools/demo/demo.sh;
-        };
-      });
-
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
 }
