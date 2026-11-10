@@ -7,3 +7,4 @@ See [PROCESS.md](PROCESS.md) for the conventions.
 
 | Tool | Setup |
 |:-----|:------|
+| [exoharness](exoharness/) | `nix flake init -t github:andysmith-ai/demos#exoharness && nix develop` |

@@ -1,0 +1,8 @@
+name: locked-down
+# The same Codex devbox Exo uses by default for `harness: codex`.
+image: ghcr.io/exoharness/codex-devbox@sha256:d6c147fb855862aef256672a81f28ad7970e510bee7c07553b69c282709311f7
+networking:
+  type: limited
+  allowed_hosts:
+    - api.openai.com
+allowed_tcp_ports: [443]
